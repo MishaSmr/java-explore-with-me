@@ -13,7 +13,7 @@ import java.util.Collections;
 @RestControllerAdvice
 public class ErrorHandler {
 
-    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @ExceptionHandler
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
@@ -23,7 +23,7 @@ public class ErrorHandler {
                 "Incorrectly made request.",
                 String.format("During [newEventDto] validation %d errors were found", e.getMessages().size()),
                 e.getMessages(),
-                LocalDateTime.now().format(FORMATTER)
+                LocalDateTime.now().format(formatter)
         );
     }
 
@@ -35,7 +35,7 @@ public class ErrorHandler {
                 "The required object was not found.",
                 e.getMessage(),
                 Collections.emptyList(),
-                LocalDateTime.now().format(FORMATTER)
+                LocalDateTime.now().format(formatter)
         );
     }
 
@@ -47,7 +47,7 @@ public class ErrorHandler {
                 "For the requested operation the conditions are not met.",
                 e.getMessage(),
                 Collections.emptyList(),
-                LocalDateTime.now().format(FORMATTER)
+                LocalDateTime.now().format(formatter)
         );
     }
 
@@ -59,7 +59,7 @@ public class ErrorHandler {
                 "For the requested operation the conditions are not met.",
                 e.getMessage(),
                 Collections.emptyList(),
-                LocalDateTime.now().format(FORMATTER)
+                LocalDateTime.now().format(formatter)
         );
     }
 
@@ -71,7 +71,7 @@ public class ErrorHandler {
                 "For the requested operation the conditions are not met.",
                 e.getMessage(),
                 Collections.emptyList(),
-                LocalDateTime.now().format(FORMATTER)
+                LocalDateTime.now().format(formatter)
         );
     }
 
@@ -83,7 +83,7 @@ public class ErrorHandler {
                 "For the requested operation the conditions are not met.",
                 e.getMessage(),
                 Collections.emptyList(),
-                LocalDateTime.now().format(FORMATTER)
+                LocalDateTime.now().format(formatter)
         );
     }
 
@@ -95,7 +95,7 @@ public class ErrorHandler {
                 "Integrity constraint has been violated",
                 e.getSQLException().getMessage(),
                 Collections.emptyList(),
-                LocalDateTime.now().format(FORMATTER)
+                LocalDateTime.now().format(formatter)
         );
     }
 }

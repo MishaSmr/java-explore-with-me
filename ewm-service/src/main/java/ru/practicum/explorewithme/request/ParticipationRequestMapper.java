@@ -2,7 +2,6 @@ package ru.practicum.explorewithme.request;
 
 import ru.practicum.explorewithme.request.dto.ParticipationRequestDto;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ParticipationRequestMapper {

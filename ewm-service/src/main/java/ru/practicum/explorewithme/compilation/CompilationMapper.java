@@ -2,10 +2,8 @@ package ru.practicum.explorewithme.compilation;
 
 import ru.practicum.explorewithme.compilation.dto.CompilationDto;
 import ru.practicum.explorewithme.compilation.dto.NewCompilationDto;
-import ru.practicum.explorewithme.event.EventMapper;
 
 import java.util.Collections;
-import java.util.stream.Collectors;
 
 public class CompilationMapper {
 

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import ru.practicum.explorewithme.event.Location;
 
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor

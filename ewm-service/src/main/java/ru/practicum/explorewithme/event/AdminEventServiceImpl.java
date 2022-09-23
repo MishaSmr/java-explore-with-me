@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AdminEventServiceImpl implements AdminEventService {
 
-    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private final EventRepository eventRepository;
     private final CategoryRepository categoryRepository;
@@ -39,8 +39,8 @@ public class AdminEventServiceImpl implements AdminEventService {
                                         String rangeEnd,
                                         Integer from,
                                         Integer size) {
-        LocalDateTime start = LocalDateTime.parse(rangeStart, FORMATTER);
-        LocalDateTime end = LocalDateTime.parse(rangeEnd, FORMATTER);
+        LocalDateTime start = LocalDateTime.parse(rangeStart, formatter);
+        LocalDateTime end = LocalDateTime.parse(rangeEnd, formatter);
         int page = from / size;
         Sort sort = Sort.by(Sort.Direction.ASC, "eventDate");
         Pageable pageable = PageRequest.of(page, size, sort);
@@ -69,7 +69,7 @@ public class AdminEventServiceImpl implements AdminEventService {
         }
         if (updateEventRequest.getDescription() != null) event.setDescription(updateEventRequest.getDescription());
         if (updateEventRequest.getEventDate() != null)
-            event.setEventDate(LocalDateTime.parse(updateEventRequest.getEventDate(), FORMATTER));
+            event.setEventDate(LocalDateTime.parse(updateEventRequest.getEventDate(), formatter));
         if (updateEventRequest.getPaid() != null) event.setPaid(updateEventRequest.getPaid());
         if (updateEventRequest.getParticipantLimit() != null)
             event.setParticipantLimit(updateEventRequest.getParticipantLimit());

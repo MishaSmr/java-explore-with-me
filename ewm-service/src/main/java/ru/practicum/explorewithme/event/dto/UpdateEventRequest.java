@@ -3,7 +3,6 @@ package ru.practicum.explorewithme.event.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor

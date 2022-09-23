@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PublicEventServiceImpl implements PublicEventService {
 
-    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private final EventRepository eventRepository;
 
@@ -48,9 +48,9 @@ public class PublicEventServiceImpl implements PublicEventService {
         if (rangeStart == null) {
             start = LocalDateTime.now();
         } else {
-            start = LocalDateTime.parse(rangeStart, FORMATTER);
+            start = LocalDateTime.parse(rangeStart, formatter);
         }
-        LocalDateTime end = LocalDateTime.parse(rangeEnd, FORMATTER);
+        LocalDateTime end = LocalDateTime.parse(rangeEnd, formatter);
         int page = from / size;
         Sort s = Sort.by(Sort.Direction.DESC, "eventDate", "id");
         Pageable pageable = PageRequest.of(page, size, s);
@@ -83,7 +83,7 @@ public class PublicEventServiceImpl implements PublicEventService {
                 "Explore With Me",
                 path,
                 ip,
-                LocalDateTime.now().format(FORMATTER)
+                LocalDateTime.now().format(formatter)
         ));
         log.info("Get events with public search parameters");
         return result;
@@ -101,7 +101,7 @@ public class PublicEventServiceImpl implements PublicEventService {
                 "Explore With Me",
                 path,
                 ip,
-                LocalDateTime.now().format(FORMATTER)
+                LocalDateTime.now().format(formatter)
         ));
         log.info("Get event with id {}", id);
         return eventFullDto;

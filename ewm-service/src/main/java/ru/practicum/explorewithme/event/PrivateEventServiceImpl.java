@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PrivateEventServiceImpl implements PrivateEventService {
 
-    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
@@ -84,7 +84,7 @@ public class PrivateEventServiceImpl implements PrivateEventService {
         }
         if (updateEventRequest.getDescription() != null) event.setDescription(updateEventRequest.getDescription());
         if (updateEventRequest.getEventDate() != null)
-            event.setEventDate(LocalDateTime.parse(updateEventRequest.getEventDate(), FORMATTER));
+            event.setEventDate(LocalDateTime.parse(updateEventRequest.getEventDate(), formatter));
         if (updateEventRequest.getPaid() != null) event.setPaid(updateEventRequest.getPaid());
         if (updateEventRequest.getParticipantLimit() != null)
             event.setParticipantLimit(updateEventRequest.getParticipantLimit());
