@@ -16,8 +16,6 @@ import java.util.stream.Collectors;
 @Service
 public class StatsClient extends BaseClient {
 
-    // private static final String API_PREFIX = "/hit";
-
     @Autowired
     public StatsClient(@Value("${stats-server.url}") String serverUrl, RestTemplateBuilder builder) {
         super(

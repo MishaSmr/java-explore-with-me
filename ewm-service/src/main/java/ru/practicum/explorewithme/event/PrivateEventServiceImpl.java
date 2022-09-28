@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.explorewithme.EWMDateTimeFormatter;
 import ru.practicum.explorewithme.category.CategoryRepository;
 import ru.practicum.explorewithme.client.StatsClient;
 import ru.practicum.explorewithme.event.dto.EventFullDto;
@@ -33,7 +34,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PrivateEventServiceImpl implements PrivateEventService {
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter formatter = EWMDateTimeFormatter.FORMATTER;
 
     private final EventRepository eventRepository;
     private final UserRepository userRepository;

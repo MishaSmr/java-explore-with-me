@@ -1,5 +1,6 @@
 package ru.practicum.explorewithme.event;
 
+import ru.practicum.explorewithme.EWMDateTimeFormatter;
 import ru.practicum.explorewithme.category.CategoryMapper;
 import ru.practicum.explorewithme.event.dto.EventFullDto;
 import ru.practicum.explorewithme.event.dto.EventShortDto;
@@ -12,7 +13,7 @@ import java.util.Collections;
 
 public class EventMapper {
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter formatter = EWMDateTimeFormatter.FORMATTER;
 
     public static Event toEvent(NewEventDto newEventDto) {
         return new Event(
@@ -21,7 +22,7 @@ public class EventMapper {
                 newEventDto.getAnnotation(),
                 null,
                 newEventDto.getDescription(),
-                LocalDateTime.parse(newEventDto.getEventDate(), FORMATTER),
+                LocalDateTime.parse(newEventDto.getEventDate(), formatter),
                 LocalDateTime.now(),
                 null,
                 0,
@@ -43,13 +44,13 @@ public class EventMapper {
                 event.getAnnotation(),
                 CategoryMapper.toCategoryDto(event.getCategory()),
                 event.getDescription(),
-                event.getEventDate().format(FORMATTER),
-                event.getCreatedOn().format(FORMATTER),
+                event.getEventDate().format(formatter),
+                event.getCreatedOn().format(formatter),
                 UserMapper.toUserShortDto(event.getInitiator()),
                 event.getConfirmedRequests(),
                 event.isPaid(),
                 event.getParticipantLimit(),
-                event.getPublishedOn() == null ? null : event.getPublishedOn().format(FORMATTER),
+                event.getPublishedOn() == null ? null : event.getPublishedOn().format(formatter),
                 event.isRequestModeration(),
                 event.getState(),
                 0,
@@ -63,7 +64,7 @@ public class EventMapper {
                 event.getTitle(),
                 event.getAnnotation(),
                 CategoryMapper.toCategoryDto(event.getCategory()),
-                event.getEventDate().format(FORMATTER),
+                event.getEventDate().format(formatter),
                 UserMapper.toUserShortDto(event.getInitiator()),
                 event.getConfirmedRequests(),
                 event.isPaid(),
