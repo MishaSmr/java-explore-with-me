@@ -67,7 +67,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query("select e from Event e" +
             " left outer join Subscription s on e.initiator = s.user" +
             " where s.follower.id = ?1" +
-            " and e.eventDate > current_timestamp" +
             " and e.state = 'PUBLISHED'")
     Page<Event> findEventsByInitiatorForFollower(Long userId,
                                                  Pageable pageable);
@@ -77,7 +76,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             " left outer join Subscription s on p.requester = s.user" +
             " where s.follower.id = ?1" +
             " and s.approved = true" +
-            " and e.eventDate > current_timestamp" +
             " and e.state = 'PUBLISHED'" +
             " and p.status = 'CONFIRMED'")
     Page<Event> findEventsByParticipantForFollower(Long userId,

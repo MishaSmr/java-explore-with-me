@@ -74,7 +74,8 @@ CREATE TABLE IF NOT EXISTS user_follower
     user_id      BIGINT  NOT NULL,
     follower_id  BIGINT  NOT NULL,
     approved   BOOLEAN,
-    CONSTRAINT pk_user_follower PRIMARY KEY (user_id, follower_id),
+    CONSTRAINT pk_user_follower PRIMARY KEY (id),
+    CONSTRAINT UQ_USER_FOLLOWER UNIQUE (user_id, follower_id),
     CONSTRAINT FK_U_ON_USERS FOREIGN KEY (user_id) REFERENCES users (id),
     CONSTRAINT FK_F_ON_USERS FOREIGN KEY (follower_id) REFERENCES users (id)
     );

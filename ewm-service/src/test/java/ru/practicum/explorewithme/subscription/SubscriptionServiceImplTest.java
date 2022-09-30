@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.explorewithme.category.Category;
+import ru.practicum.explorewithme.category.CategoryRepository;
 import ru.practicum.explorewithme.client.StatsClient;
 import ru.practicum.explorewithme.event.Event;
 import ru.practicum.explorewithme.event.EventRepository;
@@ -36,17 +37,19 @@ class SubscriptionServiceImplTest {
     private final EventRepository eventRepository;
     private final SubscriptionRepository subscriptionRepository;
     private final ParticipationRequestRepository participationRequestRepository;
+    private final CategoryRepository categoryRepository;
     @MockBean
     StatsClient statsClient;
 
     User user1 = new User(null, "First", "1@1.ru");
     User user2 = new User(null, "Second", "2@2.ru");
     User user3 = new User(null, "Third", "3@3.ru");
+    Category category = new Category(1L, "cat");
     Event event = new Event(
             1L,
             "title",
             "annotation",
-            new Category(1L, "category"),
+            category,
             "description",
             LocalDateTime.now().plusDays(5),
             LocalDateTime.now().minusDays(1),
@@ -85,6 +88,7 @@ class SubscriptionServiceImplTest {
                 .thenReturn(999L);
         long userId = userRepository.save(user1).getId();
         long followerId = userRepository.save(user2).getId();
+        event.setCategory(categoryRepository.save(category));
         eventRepository.save(event);
         subscriptionService.subscribe(followerId, userId);
         List<EventShortDto> events = subscriptionService.getEvents(followerId, "initiators", 0, 10);
@@ -97,7 +101,8 @@ class SubscriptionServiceImplTest {
                 .thenReturn(999L);
         long userId = userRepository.save(user3).getId();
         long followerId = userRepository.save(user1).getId();
-        eventRepository.save(event);
+        event.setCategory(categoryRepository.save(category));
+        participationRequest.setEvent(eventRepository.save(event));
         participationRequestRepository.save(participationRequest);
         long subId = subscriptionService.subscribe(followerId, userId).getId();
         subscriptionService.approve(userId, subId);
@@ -109,8 +114,9 @@ class SubscriptionServiceImplTest {
     void testGetParticipantsEventsForNotApprovedFollower() {
         long userId = userRepository.save(user1).getId();
         long followerId = userRepository.save(user3).getId();
+        event.setCategory(categoryRepository.save(category));
         eventRepository.save(event);
-        participationRequestRepository.save(participationRequest);
+        participationRequest.setEvent(eventRepository.save(event));
         subscriptionService.subscribe(followerId, userId);
         List<EventShortDto> events = subscriptionService.getEvents(followerId, "participants", 0, 10);
         assertThat(events.isEmpty()).isTrue();
