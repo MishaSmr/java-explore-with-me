@@ -9,8 +9,9 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,11 +27,12 @@ public class StatsClient extends BaseClient {
         );
     }
 
-    public ResponseEntity<Object> getStats(String uri) {
-        Map<String, Object> parameters = Map.of(
-                "uris", uri
-        );
-        return get("/stats/?uris={uris}", parameters);
+    public ResponseEntity<Object> getStats(List<String> uris) {
+        StringBuilder sb = new StringBuilder();
+        for (String uri : uris) {
+          sb.append("&uris=").append(uri);
+        }
+        return get("/stats/?" + sb);
     }
 
     public ResponseEntity<Object> createEndpointHit(EndpointHit endpointHit) {
@@ -38,7 +40,8 @@ public class StatsClient extends BaseClient {
     }
 
     public long getViews(Long eventId) {
-        ResponseEntity<Object> responseEntity = getStats("/events/" + eventId);
+        List<String> uris = List.of("/events/" + eventId);
+        ResponseEntity<Object> responseEntity = getStats(uris);
         List<Object> response = (List<Object>) responseEntity.getBody();
         if (response == null) {
             return 0;
@@ -49,5 +52,21 @@ public class StatsClient extends BaseClient {
                 .collect(Collectors.toList());
         if (result.isEmpty()) return 0;
         return result.get(0).getHits();
+    }
+
+    public List<Long> getViewsForList(List<Long> eventIds) {
+        List<String> uris = new ArrayList<>();
+        for (Long eventId : eventIds) {
+           uris.add("/events/" + eventId);
+        }
+        ResponseEntity<Object> responseEntity = getStats(uris);
+        List<Object> response = (List<Object>) responseEntity.getBody();
+        if (response == null) {
+            return Collections.emptyList();
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        return response.stream()
+                .map(object -> mapper.convertValue(object, ViewStats.class).getHits())
+                .collect(Collectors.toList());
     }
 }

@@ -2,14 +2,16 @@ package ru.practicum.explorewithme.subscription;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.practicum.explorewithme.user.User;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user_follower")
+@Table(name = "subscriptions")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +22,6 @@ public class Subscription {
     @ManyToOne
     @JoinColumn(name = "follower_id")
     private User follower;
-    private Boolean approved;
-    public Subscription() {
-
-    }
+    @Enumerated(EnumType.STRING)
+    private SubscriptionStatus status;
 }

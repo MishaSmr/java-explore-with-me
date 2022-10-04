@@ -6,5 +6,5 @@ public interface StatsService {
 
     EndpointHitDto create(EndpointHitDto endpointHitDto);
 
-    List<ViewStats> get(String start, String end, String[] uris, boolean unique);
+    List<ViewStats> get(String start, String end, List<String> uris, boolean unique);
 }

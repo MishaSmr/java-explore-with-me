@@ -75,7 +75,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             " left outer join ParticipationRequest p on e = p.event" +
             " left outer join Subscription s on p.requester = s.user" +
             " where s.follower.id = ?1" +
-            " and s.approved = true" +
+            " and s.status = 'APPROVED'" +
             " and e.state = 'PUBLISHED'" +
             " and p.status = 'CONFIRMED'")
     Page<Event> findEventsByParticipantForFollower(Long userId,

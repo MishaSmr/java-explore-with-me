@@ -12,7 +12,7 @@ public class SubscriptionMapper {
                 subscription.getId(),
                 subscription.getUser().getId(),
                 subscription.getFollower().getId(),
-                subscription.getApproved()
+                subscription.getStatus()
         );
     }
 }
