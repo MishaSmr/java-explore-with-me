@@ -64,6 +64,23 @@ public interface EventRepository extends JpaRepository<Event, Long> {
                                                       LocalDateTime rangeEnd,
                                                       Pageable pageable);
 
+    @Query("select e from Event e" +
+            " left outer join Subscription s on e.initiator = s.user" +
+            " where s.follower.id = ?1" +
+            " and e.state = 'PUBLISHED'")
+    Page<Event> findEventsByInitiatorForFollower(Long userId,
+                                                 Pageable pageable);
+
+    @Query("select e from Event e" +
+            " left outer join ParticipationRequest p on e = p.event" +
+            " left outer join Subscription s on p.requester = s.user" +
+            " where s.follower.id = ?1" +
+            " and s.status = 'APPROVED'" +
+            " and e.state = 'PUBLISHED'" +
+            " and p.status = 'CONFIRMED'")
+    Page<Event> findEventsByParticipantForFollower(Long userId,
+                                                   Pageable pageable);
+
     default void checkEventId(Long eventId) {
         try {
             Event event = getReferenceById(eventId);

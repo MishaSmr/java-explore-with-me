@@ -19,7 +19,7 @@ public class StatsController {
     @GetMapping("/stats")
     public List<ViewStats> get(@RequestParam(defaultValue = "2022-01-01 00:00:00") String start,
                                @RequestParam(defaultValue = "2042-01-01 00:00:00") String end,
-                               @RequestParam String[] uris,
+                               @RequestParam List<String> uris,
                                @RequestParam(defaultValue = "false") Boolean unique) {
         return statsService.get(start, end, uris, unique);
     }

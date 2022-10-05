@@ -10,6 +10,7 @@ import ru.practicum.explorewithme.user.UserMapper;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
+import java.util.Map;
 
 public class EventMapper {
 
@@ -69,6 +70,20 @@ public class EventMapper {
                 event.getConfirmedRequests(),
                 event.isPaid(),
                 0
+        );
+    }
+
+    public static EventShortDto toEventShortDto(Map.Entry<Event, Long> entry) {
+        return new EventShortDto(
+                entry.getKey().getId(),
+                entry.getKey().getTitle(),
+                entry.getKey().getAnnotation(),
+                CategoryMapper.toCategoryDto(entry.getKey().getCategory()),
+                entry.getKey().getEventDate().format(formatter),
+                UserMapper.toUserShortDto(entry.getKey().getInitiator()),
+                entry.getKey().getConfirmedRequests(),
+                entry.getKey().isPaid(),
+                entry.getValue()
         );
     }
 }

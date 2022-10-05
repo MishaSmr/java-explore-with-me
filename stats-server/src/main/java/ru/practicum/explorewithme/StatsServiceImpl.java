@@ -31,7 +31,7 @@ public class StatsServiceImpl implements StatsService {
     }
 
     @Override
-    public List<ViewStats> get(String start, String end, String[] uris, boolean unique) {
+    public List<ViewStats> get(String start, String end, List<String> uris, boolean unique) {
         log.info("Get stats");
         if (uris == null) {
             return Collections.emptyList();
