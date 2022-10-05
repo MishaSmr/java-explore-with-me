@@ -23,5 +23,5 @@ public class Subscription {
     @JoinColumn(name = "follower_id")
     private User follower;
     @Enumerated(EnumType.STRING)
-    private SubscriptionStatus status;
+    private ModerationStatus status;
 }

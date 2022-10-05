@@ -1,6 +1,6 @@
 package ru.practicum.explorewithme.subscription;
 
-public enum SubscriptionStatus {
+public enum ModerationStatus {
     WAITING,
     APPROVED,
     CANCELED

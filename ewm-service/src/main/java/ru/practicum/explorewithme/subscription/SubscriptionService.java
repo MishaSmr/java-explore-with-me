@@ -44,7 +44,7 @@ public class SubscriptionService {
     public Subscription subscribe(long followerId, SubscriptionDto subscriptionDto) {
         User user = userRepository.getReferenceById(subscriptionDto.getUserId());
         User follower = userRepository.getReferenceById(followerId);
-        Subscription subscription = new Subscription(null, user, follower, SubscriptionStatus.WAITING);
+        Subscription subscription = new Subscription(null, user, follower, ModerationStatus.WAITING);
         log.info("User id={} subscribe to user id={}", followerId, user.getId());
         return subscriptionRepository.save(subscription);
     }
@@ -59,7 +59,7 @@ public class SubscriptionService {
     @Transactional
     public void approve(long userId, long subId) {
         Subscription subscription = subscriptionRepository.getReferenceById(subId);
-        subscription.setStatus(SubscriptionStatus.APPROVED);
+        subscription.setStatus(ModerationStatus.APPROVED);
         subscriptionRepository.save(subscription);
     }
 
@@ -69,7 +69,7 @@ public class SubscriptionService {
     @Transactional
     public void cancel(long userId, long subId) {
         Subscription subscription = subscriptionRepository.getReferenceById(subId);
-        subscription.setStatus(SubscriptionStatus.CANCELED);
+        subscription.setStatus(ModerationStatus.CANCELED);
         subscriptionRepository.save(subscription);
     }
 
