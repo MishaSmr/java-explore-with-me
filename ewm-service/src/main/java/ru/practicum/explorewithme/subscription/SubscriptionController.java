@@ -35,7 +35,7 @@ public class SubscriptionController {
     }
 
     @GetMapping
-    public List<EventShortDto> getInitiatorsEvents(@PathVariable("userId") long followerId,
+    public List<EventShortDto> getEvents(@PathVariable("userId") long followerId,
                                                    @RequestParam Type type,
                                                    @RequestParam(defaultValue = "0") Integer pageFrom,
                                                    @RequestParam(defaultValue = "10") Integer pageSize) {
